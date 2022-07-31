@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Select from 'react-select'
+import Select from "react-select";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { PHOTO_CATEGORY_OPTIONS } from "../../../../constants/global";
 import Images from "../../../../constants/images";
-import './style.scss'
+import "./style.scss";
 
 PhotoForm.propTypes = {
   onSubmit: PropTypes.func,
@@ -31,7 +31,6 @@ function PhotoForm(props) {
             placeholder="What's your photo category"
             options={PHOTO_CATEGORY_OPTIONS}
           />
-
         </FormGroup>
 
         <FormGroup>

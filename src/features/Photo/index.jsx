@@ -1,13 +1,9 @@
-import React from 'react';
-import AddEditPage from './pages/AddEdit';
-import MainPage from './pages/Main';
+import React from "react";
+// import AddEditPage from "./pages/AddEdit";
+// import MainPage from "./pages/Main";
 
 function Photo() {
-    return (
-        <div>
-            <AddEditPage />
-        </div>
-    );
+  return <div>Photo</div>;
 }
 
 export default Photo;
