@@ -3,6 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import Photo from "./features/Photo";
 import Header from "./components/Header";
+import AddEditPage from "features/Photo/pages/AddEdit";
 function App() {
   return (
     <div className="photo-app">
@@ -18,6 +19,7 @@ function App() {
           <Switch>
             <Redirect exact from="/" to="/photos" />
             <Route path="/photos" component={Photo} />
+            
             <Route path="*" component={NotFound} />
           </Switch>
         </BrowserRouter>

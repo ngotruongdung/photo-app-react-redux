@@ -9,14 +9,11 @@ function Header() {
       <Container>
         <Row className="justify-content-between">
           <Col xs="auto">
-            <a
+            <p
               className="header__link header__title"
-              href="www.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              Easy FrontEnd
-            </a>
+              ASM-REACTJS
+            </p>
           </Col>
           <Col xs="auto">
             <NavLink

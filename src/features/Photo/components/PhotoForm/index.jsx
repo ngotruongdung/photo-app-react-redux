@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { PHOTO_CATEGORY_OPTIONS } from "../../../../constants/global";
-import Images from "../../../../constants/images";
+import { Button, FormGroup, Spinner } from "reactstrap";
 import "./style.scss";
+import { PHOTO_CATEGORY_OPTIONS } from "constants/global";
+import { Formik, Form, FastField } from "formik";
+import InputField from "custom-fields/InputField";
+import SelectField from "custom-fields/SelectField";
+import RandomPhotoField from "custom-fields/RandomPhotoField";
+import * as Yup from "yup";
 
 PhotoForm.propTypes = {
   onSubmit: PropTypes.func,
@@ -15,46 +18,54 @@ PhotoForm.defaultProps = {
 };
 
 function PhotoForm(props) {
+  const {initialValues, isAddMode} = props
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required("This fiel is requied"),
+    categoryId: Yup.number().required("This fiel is requied").nullable(),
+    photo: Yup.string().required("This fiel is requied"),
+  });
+
   return (
-    <div>
-      <Form>
-        <FormGroup>
-          <Label for="titleId">Title</Label>
-          <Input name="title" id="titleId" placeholder="Eg: wow nature" />
-        </FormGroup>
-
-        <FormGroup>
-          <Label for="category">Category</Label>
-          <Select
-            id="categoryId"
-            name="categoryId"
-            placeholder="What's your photo category"
-            options={PHOTO_CATEGORY_OPTIONS}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label for="categoryId">Photo</Label>
-          <div>
-            <Button type="button" outline color="primary">
-              Random a photo
-            </Button>
-          </div>
-          <div>
-            <img
-              width="200px"
-              height="200px"
-              src={Images.PINK_BG}
-              alt="pic-random"
+    <Formik
+      initialValues={initialValues}
+      onSubmit={props.onSubmit}
+      validationSchema={validationSchema}
+    >
+      {(formikProps) => {
+        const { values, errors, touched, isSubmitting } = formikProps;
+        console.log({ values, errors, touched });
+        return (
+          <Form>
+            <FastField
+              name="title"
+              component={InputField}
+              label="Title"
+              placeholder="Eg: wow nature"
             />
-          </div>
-        </FormGroup>
+            <FastField
+              name="categoryId"
+              component={SelectField}
+              label="Category"
+              placeholder="What's your photo category"
+              options={PHOTO_CATEGORY_OPTIONS}
+            />
+            <FastField
+              name="photo"
+              component={RandomPhotoField}
+              label="Photo"
+            />
 
-        <FormGroup>
-          <Button color="primary">Add to album</Button>
-        </FormGroup>
-      </Form>
-    </div>
+            <FormGroup>
+              <Button type="submit" color={isAddMode ? 'success' : 'primary'}>
+                {isSubmitting && <Spinner size="sm" />}
+                {isAddMode ? 'Add to album' : 'Update to Album'}
+              </Button>
+            </FormGroup>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }
 
